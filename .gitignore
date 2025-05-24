@@ -1,18 +1,35 @@
-node_modules
-.env
-dist
-.next
+#  Node.js
+node_modules/
 pnpm-lock.yaml
+
+#  Build artifacts
+dist/
+.next/
+out/
+.build/
 *.log
-.prisma
 
-# IDE folders
-.vscode/
-.idea/
-
-# OS metadata
+#  OS + IDEs
 .DS_Store
-Thumbs.db
+.env
+.env.local
+.env.development
+.env.production
+.idea/
+.vscode/
 
-# Prisma migrations (if you want to exclude history from VCS)
-migrations/
+# Prisma
+prisma/migrations/
+prisma/.env
+
+# Frontend build output
+apps/web/.next/
+apps/web/out/
+
+# Docker
+docker-compose.override.yml
+*.local.yml
+
+# Coverage / testing
+coverage/
+.nyc_output/

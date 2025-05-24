@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -21,6 +21,18 @@ export class UsersController {
   @Roles('management', 'client')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findById(id);
+  }
+
+  @Get('pending')
+  @Roles('management', 'sdm')
+  getPendingUsers() {
+    return this.usersService.findPendingUsers();
+  }
+
+  @Patch(':id/approve')
+  @Roles('management', 'sdm')
+  approveUser(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.approveUser(id);
   }
 }
 

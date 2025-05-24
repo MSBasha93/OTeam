@@ -39,5 +39,25 @@ export class UsersService {
     },
   });
 }
+async findPendingUsers() {
+  return this.prisma.user.findMany({
+    where: { isApproved: false },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      expertise: true,
+      createdAt: true,
+    },
+  });
+}
+
+async approveUser(id: number) {
+  return this.prisma.user.update({
+    where: { id },
+    data: { isApproved: true },
+  });
+}
+
 
 }

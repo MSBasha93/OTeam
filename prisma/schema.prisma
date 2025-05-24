@@ -49,6 +49,7 @@ model User {
   expertise        String? // e.g. "finance", "network"
   isAvailable      Boolean  @default(true)
   Rca              Rca[]
+  isApproved Boolean @default(false)
 }
 
 model Rca {
