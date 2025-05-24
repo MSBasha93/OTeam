@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: oteam
+      POSTGRES_USER: oteam_admin
+      POSTGRES_PASSWORD: secret
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
