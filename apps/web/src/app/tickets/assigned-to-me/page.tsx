@@ -12,8 +12,8 @@ export default function AssignedTickets() {
   useEffect(() => {
     if (!token) return;
     api('/tickets/assigned-to-me', 'GET', undefined, token)
-      .then(setTickets)
-      .catch((err) => setError(err.message));
+      .then((data) => setTickets(data as any[]))
+      .catch((err: any) => setError(err.message));
   }, [token]);
 
   return (

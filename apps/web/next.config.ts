@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+import { resolve } from 'path';
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  webpack(config: any) {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@': resolve(__dirname, 'src'),
+    };
+    return config;
+  },
 };
 
 export default nextConfig;

@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export function saveToken(token: string) {
   localStorage.setItem('token', token);
