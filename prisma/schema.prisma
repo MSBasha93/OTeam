@@ -6,23 +6,31 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Ticket {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   title       String
   description String
-  status      String   @default("open")
-  priority    String   @default("medium")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      String @default("open")
+  priority    String @default("medium")
+  assignedTo  Int?
+  assignee    User?  @relation("ExpertTickets", fields: [assignedTo], references: [id])
 
-  createdBy   Int
-  creator     User     @relation("UserCreatedTickets", fields: [createdBy], references: [id])
+  escalated   Boolean   @default(false)
+  escalatedAt DateTime?
+  escalatedBy Int?
+  escalator   User?     @relation("TicketEscalator", fields: [escalatedBy], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
+  createdBy        Int
+  creator          User      @relation("UserCreatedTickets", fields: [createdBy], references: [id])
+  slaDueAt         DateTime?
+  escalationReason String?
+  Rca              Rca?
 
   @@map("tickets")
 }
-
-
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -31,11 +39,26 @@ model User {
   role      String
   createdAt DateTime @default(now())
 
-  // Add this line if you want subuser relationships
-  clientId  Int?       // FK to another user
-  client    User?      @relation("ClientSubusers", fields: [clientId], references: [id])
-  subusers  User[]     @relation("ClientSubusers")
-  ticketsCreated Ticket[] @relation("UserCreatedTickets")
+  clientId Int?
+  client   User?  @relation("ClientSubusers", fields: [clientId], references: [id])
+  subusers User[] @relation("ClientSubusers")
+
+  ticketsCreated   Ticket[] @relation("UserCreatedTickets")
+  assignedTickets  Ticket[] @relation("ExpertTickets")
+  escalatedTickets Ticket[] @relation("TicketEscalator")
+  expertise        String? // e.g. "finance", "network"
+  isAvailable      Boolean  @default(true)
+  Rca              Rca[]
 }
 
+model Rca {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
 
+  submittedBy     Int
+  submittedByUser User @relation(fields: [submittedBy], references: [id])
+
+  ticketId Int    @unique
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+}

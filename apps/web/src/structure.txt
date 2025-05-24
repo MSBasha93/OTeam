@@ -1,0 +1,16 @@
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx                     # Home (redirects to dashboard if logged in)
+│   ├── dashboard/                   # Role-based views
+│   ├── tickets/                     # Ticket list, create, view
+│   ├── rca/                         # RCA view/submit
+├── lib/
+│   ├── api.ts                       # Backend fetch wrapper
+│   ├── auth.ts                      # Token/role helpers
+├── components/
+│   ├── Header.tsx                   # Shared nav
+│   ├── TicketCard.tsx               # Ticket preview
+│   ├── StatusBadge.tsx
+├── context/
+│   ├── AuthContext.tsx              # JWT + user info

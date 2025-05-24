@@ -27,4 +27,17 @@ export class UsersService {
       },
     });
   }
+  async findAvailableExpertByDomain(domain: string) {
+  return this.prisma.user.findFirst({
+    where: {
+      role: 'expert',
+      isAvailable: true,
+      expertise: domain,
+    },
+    orderBy: {
+      createdAt: 'asc', // or assigned ticket count if tracked
+    },
+  });
+}
+
 }

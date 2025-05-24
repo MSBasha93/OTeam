@@ -19,6 +19,8 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2"
+    "@prisma/client": "^6.8.2",
+    "date-fns": "^4.1.0",
+    "jwt-decode": "^4.0.0"
   }
 }

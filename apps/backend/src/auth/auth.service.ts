@@ -19,7 +19,7 @@ export class AuthService {
     return isValid ? user : null;
   }
 
-  async register(email: string, password: string, role: string) {
+  async register(email: string, password: string, role: string, expertise?: string) {
     const existing = await this.prisma.user.findUnique({ where: { email } });
     if (existing) throw new ConflictException('Email already exists');
 
@@ -29,6 +29,7 @@ export class AuthService {
         email,
         password: hashed,
         role,
+        expertise,
       },
     });
 
