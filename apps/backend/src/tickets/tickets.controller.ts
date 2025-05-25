@@ -79,12 +79,12 @@ export class TicketsController {
   }
   @Get('my')
   getMyTickets(@Request() req: any) {
-    return this.ticketsService.getClientTickets(req.user.id);
+    return this.ticketsService.getClientTickets(Number(req.user.id));
   }
 
   @Get('assigned-to-me')
   getMyAssigned(@Request() req: any) {
-    return this.ticketsService.getExpertTickets(req.user.id);
+    return this.ticketsService.getExpertTickets(Number(req.user.id));
   }
 
   @Get('escalated')
@@ -105,7 +105,7 @@ export class TicketsController {
   @Roles('expert')
   @Get('assigned-to-me')
   getExpertAssignedTickets(@Request() req: any) {
-    return this.ticketsService.getExpertTickets(req.user.id);
+    return this.ticketsService.getExpertTickets(Number(req.user.id));
   }
 
 
